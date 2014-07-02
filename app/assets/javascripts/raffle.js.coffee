@@ -1,9 +1,8 @@
-@RaffleCtrl = ($scope) ->
-  $scope.entries = [
-    {name: "The Dude" }
-    {name: "Walter" }
-    {name: "Donnie" }
-  ]
+app = angular.module("Raffler", ["ngResource"])
+
+@RaffleCtrl = ($scope, $resource) ->
+  Entry = $resource("/entries/:id.json", {id: "@id"}, {update: {method: "PUT"}})
+  $scope.entries = Entry.query()
 
   $scope.addEntry = ->
     $scope.entries.push($scope.newEntry)
